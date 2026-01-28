@@ -72,59 +72,66 @@ we're going to need to do it here in order to allow for translations.
 %>
 </script>
 
-<div class="pure-g" style="max-width: 1750px; margin: 0 auto; padding-top: 20px; display: flex; flex-wrap: wrap;">
+<div class="watch-main-layout">
     
     <!-- Primary Column (Player + Info) -->
-    <div class="pure-u-1 pure-u-lg-17-24" style="padding-right: 24px;">
+    <div class="primary-column">
         
         <!-- Player Container -->
-        <div id="player-container" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+        <div id="player-container">
              <%= rendered "components/player" %>
         </div>
 
         <!-- Video Title -->
-        <h1 style="font-size: 20px; font-weight: 700; line-height: 28px; margin: 0 0 12px 0;">
+        <h1 class="video-title">
             <%= title %>
             <% if params.listen %>
-                <a title="<%=translate(locale, "Video mode")%>" href="/watch?<%= env.params.query %>&listen=0" style="vertical-align: middle; margin-left:8px; font-size: 0.8em; color: var(--text-secondary);">
+                <a title="<%=translate(locale, "Video mode")%>" href="/watch?<%= env.params.query %>&listen=0" class="mode-icon">
                     <i class="icon ion-ios-videocam"></i>
                 </a>
             <% else %>
-                <a title="<%=translate(locale, "Audio mode")%>" href="/watch?<%= env.params.query %>&listen=1" style="vertical-align: middle; margin-left:8px; font-size: 0.8em; color: var(--text-secondary);">
+                <a title="<%=translate(locale, "Audio mode")%>" href="/watch?<%= env.params.query %>&listen=1" class="mode-icon">
                     <i class="icon ion-md-headset"></i>
                 </a>
             <% end %>
         </h1>
 
-        <!-- Interaction Row -->
-        <div class="pure-g flexible" style="align-items: center; justify-content: space-between; margin-bottom: 16px;">
+        <!-- Interaction Row (YouTube 2024 Style) -->
+        <div class="interaction-row">
             
-            <!-- Channel & Sub -->
-            <div class="pure-u-1 pure-u-md-11-24 flexible" style="align-items: center;">
-                 <a href="/channel/<%= video.ucid %>" class="channel-profile" style="display:flex; align-items:center; text-decoration:none; margin-right: 24px;">
+            <!-- Left: Channel & Subscribe -->
+            <div class="channel-info-wrapper">
+                 <a href="/channel/<%= video.ucid %>" class="channel-owner-link">
                     <% if !video.author_thumbnail.empty? %>
-                        <img src="/ggpht<%= URI.parse(video.author_thumbnail).request_target %>" alt="" style="width:40px; height:40px; border-radius:50%; margin-right:12px;" />
+                        <img src="/ggpht<%= URI.parse(video.author_thumbnail).request_target %>" class="channel-avatar" />
                     <% end %>
-                    <div style="display:flex; flex-direction:column;">
-                        <span style="font-weight:700; font-size:16px; color:var(--text-primary);"><%= author %><% if !video.author_verified.nil? && video.author_verified %>&nbsp;<i class="icon ion ion-md-checkmark-circle"></i><% end %></span>
-                        <span style="font-size:12px; color:var(--text-secondary);"><%= video.sub_count_text %></span>
+                    <div class="channel-metadata">
+                        <span class="channel-name"><%= author %><% if !video.author_verified.nil? && video.author_verified %>&nbsp;<i class="icon ion ion-md-checkmark-circle"></i><% end %></span>
+                        <span class="sub-count"><%= video.sub_count_text %></span>
                     </div>
                 </a>
-                <%= rendered "components/subscribe_widget" %>
+                <div class="subscribe-container">
+                    <%= rendered "components/subscribe_widget" %>
+                </div>
             </div>
 
-            <!-- Buttons -->
-            <div class="pure-u-1 pure-u-md-13-24 flexible" style="justify-content: flex-end; align-items: center; gap: 8px;">
-                <div class="pure-button pure-button-secondary rounded-btn" style="cursor: default; border-radius: 18px; padding: 6px 16px;">
-                     <i class="icon ion-ios-thumbs-up"></i> <%= number_with_separator(video.likes) %>
+            <!-- Right: Actions (Likes, Download) -->
+            <div class="video-actions">
+                <div class="action-btn-group">
+                    <div class="pure-button action-pill like-button">
+                         <i class="icon ion-ios-thumbs-up"></i>
+                         <span><%= number_with_separator(video.likes) %></span>
+                    </div>
                 </div>
-                 <%= Invidious::Frontend::WatchPage.download_widget(locale, video, video_assets) %>
+                <div class="download-container">
+                    <%= Invidious::Frontend::WatchPage.download_widget(locale, video, video_assets) %>
+                </div>
             </div>
         </div>
 
         <!-- Description Box -->
-        <div class="description-container" style="background: var(--card-bg, rgba(255,255,255,0.1)); border-radius: 12px; padding: 12px; margin-bottom: 24px; font-size: 14px;">
-            <div style="font-weight: 700; font-size: 14px; margin-bottom: 8px;">
+        <div class="description-container">
+            <div class="description-stats">
                <% if video.premiere_timestamp.try &.> Time.utc %>
                    <%= number_with_separator(video.views) %> views • <%= video.premiere_timestamp.try { |t| translate(locale, "Premieres `x`", t.to_s("%B %-d, %R UTC")) } %>
                <% else %>
@@ -139,15 +146,14 @@ we're going to need to do it here in order to allow for translations.
                     <input id="descexpansionbutton" type="checkbox"/>
                     <div id="descriptionWrapper"><%= video.description_html %></div>
                     <label for="descexpansionbutton">
-                        <a style="font-weight: bold; cursor: pointer; color: var(--text-primary);"></a>
+                        <a class="show-more-link"></a>
                     </label>
                 <% end %>
             </div>
             
-            <!-- Music/Chapters/License -->
              <% if !video.music.empty? || video.license %>
-             <hr style="opacity: 0.1; margin: 12px 0;">
-             <div class="metadata-extra" style="font-size: 12px; color: var(--text-secondary);">
+             <hr class="desc-divider">
+             <div class="metadata-extra">
                  <% if video.license && !video.license.empty? %>
                     <p><%= translate(locale, "License: ") %> <%= video.license %></p>
                  <% end %>
@@ -155,55 +161,60 @@ we're going to need to do it here in order to allow for translations.
              <% end %>
         </div>
 
-         <div id="comments" class="comments" style="margin-top: 24px;">
-            <% if nojs %>
-                <%= comment_html %>
-            <% else %>
-                <noscript>
-                    <a href="/watch?<%= env.params.query %>&nojs=1">
-                        <%= translate(locale, "Hi! Looks like you have JavaScript turned off. Click here to view comments, keep in mind they may take a bit longer to load.") %>
-                    </a>
-                </noscript>
-            <% end %>
+         <!-- Comments Section -->
+         <div id="comments-section" class="comments-area">
+            <div class="comments-header">
+                <h3><%= translate(locale, "Comments") %></h3>
+            </div>
+            <div id="comments" class="comments-container">
+                <% if nojs %>
+                    <%= comment_html %>
+                <% else %>
+                    <noscript>
+                        <a href="/watch?<%= env.params.query %>&nojs=1">
+                            <%= translate(locale, "Hi! Looks like you have JavaScript turned off. Click here to view comments.") %>
+                        </a>
+                    </noscript>
+                <% end %>
+            </div>
         </div>
 
-    </div><div class="pure-u-1 pure-u-lg-7-24">
+    </div>
+
+    <!-- Secondary Column (Sidebar) -->
+    <div class="secondary-column">
         
         <!-- Playlist -->
         <% if plid %>
-            <div id="playlist" class="h-box" style="margin-bottom: 16px;"></div>
+            <div id="playlist" class="playlist-container"></div>
         <% end %>
+
+        <!-- Related Videos Head -->
+        <div class="sidebar-header">
+            <h3><%= translate(locale, "Up Next") %></h3>
+        </div>
 
         <!-- Related Videos List -->
         <% if params.related_videos %>
-            <% if !video.related_videos.empty? %>
-               <!-- Auto-play Header (Visual) -->
-               <div style="margin-bottom: 12px; display: flex; justify-content: space-between;">
-                   <h3 style="font-size: 16px; margin: 0;"><%= translate(locale, "Up Next") %></h3>
-               </div>
-            <% end %>
-
-            <div class="related-videos-column">
+            <div class="related-videos-list">
                 <% video.related_videos.each do |rv| %>
                     <% if rv["id"]? %>
-                        <div class="related-video-item" style="display: flex; gap: 8px; margin-bottom: 10px;">
-                            <div class="thumbnail-wrapper" style="width: 168px; flex-shrink: 0; position: relative;">
+                        <div class="related-video-item">
+                            <div class="thumbnail-wrapper">
                                 <a href="/watch?v=<%= rv["id"] %>&listen=<%= params.listen %>">
-                                    <img loading="lazy" src="/vi/<%= rv["id"] %>/mqdefault.jpg" style="width: 100%; border-radius: 8px; vertical-align: middle;">
+                                    <img loading="lazy" src="/vi/<%= rv["id"] %>/mqdefault.jpg">
+                                    <span class="length-badge">
+                                        <%= recode_length_seconds(rv["length_seconds"]?.try &.to_i? || 0) %>
+                                    </span>
                                 </a>
-                                <span class="length-badge" style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); color: #fff; padding: 1px 4px; border-radius: 4px; font-size: 11px;">
-                                    <%= recode_length_seconds(rv["length_seconds"]?.try &.to_i? || 0) %>
-                                </span>
                             </div>
-                            <div class="info" style="flex: 1; min-width: 0;">
-                                <a href="/watch?v=<%= rv["id"] %>&listen=<%= params.listen %>" style="text-decoration: none; color: inherit;">
-                                    <h4 style="margin: 0 0 4px 0; font-size: 14px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
-                                        <%= HTML.escape(rv["title"]) %>
-                                    </h4>
+                            <div class="video-info">
+                                <a href="/watch?v=<%= rv["id"] %>&listen=<%= params.listen %>" class="rv-title-link">
+                                    <h4 class="rv-title"><%= HTML.escape(rv["title"]) %></h4>
                                 </a>
-                                <div style="font-size: 12px; color: var(--text-secondary);">
-                                    <div><%= rv["author"]? %></div>
-                                    <div>
+                                <div class="rv-metadata">
+                                    <div class="rv-author"><%= rv["author"]? %></div>
+                                    <div class="rv-stats">
                                          <%=
                                             views = short_text_to_number(rv["short_view_count"]? || "0")
                                             translate_count(locale, "generic_views_count", views, NumberFormatting::Short)
