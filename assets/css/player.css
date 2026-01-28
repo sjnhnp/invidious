@@ -3,7 +3,8 @@
   height: 0;
 }
 
-.video-js.player-style-youtube .vjs-progress-control .vjs-progress-holder, .video-js.player-style-youtube .vjs-progress-control {
+.video-js.player-style-youtube .vjs-progress-control .vjs-progress-holder,
+.video-js.player-style-youtube .vjs-progress-control {
   position: absolute;
   right: 0;
   left: 0;
@@ -12,15 +13,15 @@
 }
 
 .video-js.player-style-youtube .vjs-control-bar {
-  background: linear-gradient(rgba(0,0,0,0.1), rgba(0, 0, 0,0.5));
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
 }
 
 .video-js.player-style-youtube .vjs-slider {
-  background-color: rgba(255,255,255,0.2);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-.video-js.player-style-youtube .vjs-load-progress > div {
-  background-color: rgba(255,255,255,0.5);
+.video-js.player-style-youtube .vjs-load-progress>div {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .video-js.player-style-youtube .vjs-play-progress {
@@ -31,7 +32,7 @@
   font-size: 15px;
 }
 
-.video-js.player-style-youtube .vjs-control-bar > .vjs-spacer {
+.video-js.player-style-youtube .vjs-control-bar>.vjs-spacer {
   flex: 1;
   order: 2;
 }
@@ -71,8 +72,11 @@
   padding-top: 2em
 }
 
-.video-js.player-style-youtube .vjs-progress-control .vjs-progress-holder, .video-js.player-style-youtube .vjs-progress-control {height: 5px;
-margin-bottom: 10px;}
+.video-js.player-style-youtube .vjs-progress-control .vjs-progress-holder,
+.video-js.player-style-youtube .vjs-progress-control {
+  height: 5px;
+  margin-bottom: 10px;
+}
 
 ul.vjs-menu-content::-webkit-scrollbar {
   display: none;
@@ -82,7 +86,7 @@ ul.vjs-menu-content::-webkit-scrollbar {
   cursor: none;
 }
 
-.video-js .vjs-text-track-display > div > div > div {
+.video-js .vjs-text-track-display>div>div>div {
   background-color: rgba(0, 0, 0, 0.75) !important;
   border-radius: 9px !important;
   padding: 5px !important;
@@ -124,7 +128,7 @@ ul.vjs-menu-content::-webkit-scrollbar {
   order: 7;
 }
 
-.vjs-playback-rate > .vjs-menu {
+.vjs-playback-rate>.vjs-menu {
   width: 50px;
 }
 
@@ -182,6 +186,7 @@ ul.vjs-menu-content::-webkit-scrollbar {
 .video-js .vjs-overlay {
   background-color: rgba(35, 35, 35, 0.75) !important;
 }
+
 .video-js .vjs-overlay * {
   color: rgba(255, 255, 255, 1) !important;
   text-align: center;
@@ -219,23 +224,25 @@ ul.vjs-menu-content::-webkit-scrollbar {
   object-fit: cover;
 }
 
-.player-dimensions.vjs-fluid {
-  padding-top: 82vh;
-}
+/* Removed .player-dimensions.vjs-fluid padding-top hack */
 
 video.video-js {
   position: absolute;
   height: 100%;
+  width: 100%;
+  object-fit: contain;
+  /* Prevents cropping */
 }
 
 #player-container {
   position: relative;
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: 1em;
-  margin-right: 1em;
-  padding-bottom: 82vh;
-  height: 0;
+  /* aspect-ratio: ... handled inline in template */
+  width: 100%;
+  /* Ensure it takes full width of parent */
+  margin: 0 auto 20px auto;
+  /* Center and add bottom space */
+  background-color: #000;
+  /* Black background for any letterboxing */
 }
 
 .mobile-operations-bar {
@@ -251,6 +258,16 @@ video.video-js {
   position: absolute !important;
   bottom: unset !important;
   top: 1.5em;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 767px) {
+  #player-container {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+    /* Optional: square corners on mobile often looks better/standard */
+  }
 }
 
 @media screen and (max-width: 700px) {
