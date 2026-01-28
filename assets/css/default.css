@@ -967,8 +967,7 @@ p,
 }
 
 /* Force dark theme-like appearance or refine dark theme */
-body.dark-theme,
-body.no-theme {
+body.dark-theme {
   background-color: var(--bg-color);
   color: var(--text-primary);
 }

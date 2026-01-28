@@ -19,6 +19,28 @@ body.no-theme {
     color: var(--text-primary);
 }
 
+/* Light Mode Resets */
+body.light-theme {
+    background-color: #ffffff;
+    color: #333;
+    --text-primary: #333;
+    --text-secondary: #555;
+    --card-bg: #f8f8f8;
+    --bg-color: #ffffff;
+    /* Override base variable to affect other components */
+}
+
+/* Light Mode Resets */
+body.light-theme {
+    background-color: #ffffff;
+    color: #333;
+    --text-primary: #333;
+    --text-secondary: #555;
+    --card-bg: #f8f8f8;
+    --bg-color: #ffffff;
+    /* Override base variable to affect other components */
+}
+
 /* Container Spacing */
 #contents {
     max-width: 1700px;
