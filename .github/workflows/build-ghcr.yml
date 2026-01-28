@@ -1,17 +1,7 @@
 name: Build and Push to GHCR
 
 on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - "*.md"
-      - LICENCE
-      - TRANSLATION
-      - invidious.service
-      - .git*
-      - .editorconfig
-      - screenshots/*
+  workflow_dispatch:
 
 jobs:
   build-and-push:
