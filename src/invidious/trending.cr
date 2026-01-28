@@ -22,7 +22,7 @@ def fetch_trending(trending_type, region, locale)
 
     # Fallback to FEtrending as the channel workaround is broken
     browse_id = "FEtrending"
-    params = nil
+    params = ""
   end
 
   client_config = YoutubeAPI::ClientConfig.new(region: region)
