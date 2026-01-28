@@ -1035,9 +1035,11 @@ body {
 .watch-main-layout {
   display: grid;
   grid-template-columns: 1fr 402px;
-  /* Set sidebar to a specific width to match YouTube */
-  gap: 24px;
-  padding-top: 12px;
+  /* Keep sidebar at specific width to match YouTube */
+  gap: 40px;
+  /* Restore comfortable spacing as requested */
+  padding-top: 24px;
+  /* Restore vertical breathing room */
 }
 
 @media (max-width: 1024px) {
