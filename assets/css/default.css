@@ -1021,10 +1021,10 @@ body {
 /* 播放页网格布局 (Watch Page Grid) */
 .watch-main-layout {
   display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 40px;
-  /* Slightly increased gap as requested (Requested Item 5) */
-  padding-top: 24px;
+  grid-template-columns: 1fr 402px;
+  /* Set sidebar to a specific width to match YouTube */
+  gap: 24px;
+  padding-top: 12px;
 }
 
 @media (max-width: 1024px) {
@@ -1037,12 +1037,15 @@ body {
 #player-container {
   width: 100%;
   background: #000;
-  /* Re-add background for consistent gap filling */
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   margin-bottom: 20px;
   z-index: 10;
   position: relative;
+  /* Centering to ensure no cropping artifacts */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 640px) {
@@ -1073,17 +1076,16 @@ body {
   left: 0;
 }
 
-/* Ensure the poster and video fill the container to show rounded corners (Requested Item 1/2) */
+/* Ensure the poster and video fill the container WITHOUT cropping (Requested Item 3) */
 video.vjs-tech {
-  object-fit: cover !important;
-  /* Force fill to eliminate internal black bars */
+  object-fit: contain !important;
+  /* Back to contain to ensure full image version as requested */
   border-radius: var(--border-radius-lg);
 }
 
 .vjs-poster {
-  background-size: cover !important;
-  /* Match video fit */
-  background-color: transparent !important;
+  background-size: contain !important;
+  background-color: #000 !important;
 }
 
 .vjs-big-play-button {
@@ -1491,21 +1493,23 @@ body.light-theme .download-pill-group select {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Remove internal h-box padding in navbar to align with layout (Requested Item 3) */
+/* Remove internal h-box padding in navbar and ensure exact alignment (Requested Items 1 & 2) */
 .navbar.h-box {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+.index-link {
+  padding-left: 0 !important;
+  /* Absolute left for Wings */
 }
 
 .user-field {
   display: flex !important;
   justify-content: flex-end !important;
   align-items: center !important;
-}
-
-.user-field>div {
-  display: flex !important;
-  justify-content: flex-end !important;
+  padding-right: 0 !important;
+  /* Absolute right for User area */
 }
 
 @media (max-width: 640px) {
