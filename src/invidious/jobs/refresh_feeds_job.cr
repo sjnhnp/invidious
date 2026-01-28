@@ -10,7 +10,7 @@ class Invidious::Jobs::RefreshFeedsJob < Invidious::Jobs::BaseJob
     active_channel = ::Channel(Bool).new
 
     loop do
-    loop do
+
       # Fetch emails first to avoid holding the DB connection open
       emails = [] of String
       db.query("SELECT email FROM users WHERE feed_needs_update = true OR feed_needs_update IS NULL LIMIT 1000") do |rs|
