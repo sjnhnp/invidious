@@ -5,6 +5,7 @@ def fetch_trending(trending_type, region, locale)
   plid = nil
 
   browse_id = ""
+  params = ""
 
   case trending_type.try &.downcase
   when "gaming"
