@@ -21,7 +21,7 @@ def fetch_trending(trending_type, region, locale)
     # params = "EgdsaXZldGFikgEDCKEK"
 
     # Fallback to FEtrending as the channel workaround is broken
-    browse_id = "FEtrending"
+    browse_id = "UC-9-kyTW8ZkZNDHQJ6FgpwQ" # Music Channel
     params = ""
   end
 
