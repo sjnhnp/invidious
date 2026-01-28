@@ -23,6 +23,8 @@
     "Authorize token for `x`?": "`x` 的授权令牌？",
     "Yes": "是",
     "No": "否",
+    "No popular videos found": "未找到热门视频",
+    "The popular feed is generated from videos watched on this instance.": "当前热门页面是根据本实例上观看的视频生成的。",
     "Import and Export Data": "导入与导出数据",
     "Import": "导入",
     "Import Invidious data": "导入 Invidious JSON 数据",

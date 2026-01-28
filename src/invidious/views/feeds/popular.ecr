@@ -12,6 +12,12 @@
 <%= rendered "components/feed_menu" %>
 
 <div class="pure-g">
+<% if popular_videos.empty? %>
+    <div class="pure-u-1" style="text-align:center; padding: 2em;">
+        <p><%= translate(locale, "No popular videos found") %></p>
+        <p><%= translate(locale, "The popular feed is generated from videos watched on this instance.") %></p>
+    </div>
+<% end %>
 <% popular_videos.each do |item| %>
     <%= rendered "components/item" %>
 <% end %>

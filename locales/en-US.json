@@ -41,6 +41,8 @@
     "Authorize token for `x`?": "Authorize token for `x`?",
     "Yes": "Yes",
     "No": "No",
+    "No popular videos found": "No popular videos found",
+    "The popular feed is generated from videos watched on this instance.": "The popular feed is generated from videos watched on this instance.",
     "Import and Export Data": "Import and Export Data",
     "Import": "Import",
     "Import Invidious data": "Import Invidious JSON data",

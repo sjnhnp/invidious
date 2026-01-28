@@ -17,8 +17,12 @@ def fetch_trending(trending_type, region, locale)
     # Livestreams is the default one as Youtube removed
     # the aggregated trending page
     # https://github.com/iv-org/invidious/issues/5397#issuecomment-3218928458
-    browse_id = "UC4R8DWoMoI7CAwX8_LjQHig"
-    params = "EgdsaXZldGFikgEDCKEK"
+    # browse_id = "UC4R8DWoMoI7CAwX8_LjQHig"
+    # params = "EgdsaXZldGFikgEDCKEK"
+
+    # Fallback to FEtrending as the channel workaround is broken
+    browse_id = "FEtrending"
+    params = ""
   end
 
   client_config = YoutubeAPI::ClientConfig.new(region: region)
