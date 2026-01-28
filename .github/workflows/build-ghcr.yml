@@ -1,0 +1,68 @@
+name: Build and Push to GHCR
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "*.md"
+      - LICENCE
+      - TRANSLATION
+      - invidious.service
+      - .git*
+      - .editorconfig
+      - screenshots/*
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      matrix:
+        include:
+          - dockerfile: "docker/Dockerfile"
+            tag_suffix: ""
+            platform: "linux/amd64"
+          # Uncomment if you need ARM64 support
+          # - dockerfile: "docker/Dockerfile.arm64"
+          #   tag_suffix: "-arm64"
+          #   platform: "linux/arm64"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=master
+            type=sha,format=short
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          platforms: ${{ matrix.platform }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+             "release=1"
