@@ -9,13 +9,11 @@
         <% case item when %>
         <% when SearchChannel %>
             <% if !thin_mode %>
-                <a tabindex="-1" href="/channel/<%= item.ucid %>">
-                    <center>
-                        <img loading="lazy" style="width:56.25%" src="/ggpht<%= URI.parse(item.author_thumbnail).request_target.gsub(/=s\d+/, "=s176") %>" alt="" />
-                    </center>
+                <a tabindex="-1" href="/channel/<%= item.ucid %>" class="channel-image-link">
+                    <img loading="lazy" class="channel-avatar" src="/ggpht<%= URI.parse(item.author_thumbnail).request_target.gsub(/=s\d+/, "=s176") %>" alt="" />
                 </a>
             <%- else -%>
-                <div class="thumbnail-placeholder" style="width:56.25%"></div>
+                <div class="thumbnail-placeholder"></div>
             <% end %>
 
             <div class="video-card-row flexible">
@@ -26,10 +24,12 @@
                 </a></div>
             </div>
 
-            <% if !item.channel_handle.nil? %><p class="channel-name" dir="auto"><%= item.channel_handle %></p><% end %>
-            <p><%= translate_count(locale, "generic_subscribers_count", item.subscriber_count, NumberFormatting::Separator) %></p>
-            <% if !item.auto_generated && item.channel_handle.nil? %><p><%= translate_count(locale, "generic_videos_count", item.video_count, NumberFormatting::Separator) %></p><% end %>
-            <h5><%= item.description_html %></h5>
+            <div class="channel-info-meta">
+                <% if !item.channel_handle.nil? %><p class="channel-handle" dir="auto"><%= item.channel_handle %></p><% end %>
+                <p class="video-data"><%= translate_count(locale, "generic_subscribers_count", item.subscriber_count, NumberFormatting::Separator) %></p>
+                <% if !item.auto_generated && item.channel_handle.nil? %><p class="video-data"><%= translate_count(locale, "generic_videos_count", item.video_count, NumberFormatting::Separator) %></p><% end %>
+                <h5 class="channel-desc"><%= item.description_html %></h5>
+            </div>
         <% when SearchHashtag %>
             <% if !thin_mode %>
                 <a tabindex="-1" href="<%= item.url %>">

@@ -156,6 +156,16 @@ module Invidious::Routes::Watch
     captions = captions - preferred_captions
 
     aspect_ratio = "16:9"
+    if !video.live_now
+      first_stream = fmt_stream.find { |f| f["width"]? && f["height"]? }
+      first_stream ||= adaptive_fmts.find { |f| f["width"]? && f["height"]? }
+
+      if first_stream
+        w = first_stream["width"].as_i
+        h = first_stream["height"].as_i
+        aspect_ratio = "#{w}:#{h}"
+      end
+    end
 
     thumbnail = "/vi/#{video.id}/maxres.jpg"
 

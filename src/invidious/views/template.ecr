@@ -29,7 +29,7 @@
 <body class="<%= dark_mode.blank? ? "no" : dark_mode %>-theme">
     <span style="display:none" id="dark_mode_pref"><%= dark_mode %></span>
     <div class="pure-g">
-        <div class="pure-u-1 pure-u-xl-20-24" id="contents">
+        <div class="pure-u-1" id="contents">
             <div class="pure-g navbar h-box">
                 <% if navbar_search %>
                     <div class="pure-u-1 pure-u-md-4-24">
@@ -45,9 +45,9 @@
                         <div class="pure-u-1-4">
                             <a id="toggle_theme" href="/toggle_theme?referer=<%= env.get?("current_page") %>" class="pure-menu-heading" title="<%= dark_mode == "dark" ? translate(locale, "Switch to light theme") : translate(locale, "Switch to dark theme") %>">
                                 <% if dark_mode == "dark" %>
-                                    <i class="icon ion-ios-moon" style="color: var(--accent-color);"></i>
-                                <% else %>
                                     <i class="icon ion-ios-sunny" style="color: #ffcc00;"></i>
+                                <% else %>
+                                    <i class="icon ion-ios-moon" style="color: var(--accent-color);"></i>
                                 <% end %>
                             </a>
                         </div>
@@ -83,9 +83,9 @@
                         <div class="pure-u-1-3">
                             <a id="toggle_theme" href="/toggle_theme?referer=<%= env.get?("current_page") %>" class="pure-menu-heading" title="<%= dark_mode == "dark" ? translate(locale, "Switch to light theme") : translate(locale, "Switch to dark theme") %>">
                                 <% if dark_mode == "dark" %>
-                                    <i class="icon ion-ios-moon" style="color: var(--accent-color);"></i>
-                                <% else %>
                                     <i class="icon ion-ios-sunny" style="color: #ffcc00;"></i>
+                                <% else %>
+                                    <i class="icon ion-ios-moon" style="color: var(--accent-color);"></i>
                                 <% end %>
                             </a>
                         </div>
