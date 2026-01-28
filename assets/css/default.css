@@ -1204,8 +1204,22 @@ body.light-theme .like-pill {
   height: 36px;
   background-color: var(--pill-bg);
   border-radius: var(--border-radius-pill);
-  overflow: hidden;
+  overflow: visible;
+  /* Changed to visible to ensure dropdown is clickable and button doesn't vanish */
   transition: background 0.2s;
+  align-items: center;
+}
+
+/* Hide the stacked label for a cleaner pill look */
+.download-pill-group label {
+  display: none !important;
+}
+
+.download-pill-group .pure-control-group {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
 }
 
 .download-pill-group form:hover {
@@ -1224,26 +1238,71 @@ body.light-theme .like-pill {
   border: none !important;
   box-shadow: none !important;
   height: 36px;
-  display: flex;
+  display: flex !important;
+  /* Ensure it's visible */
   align-items: center;
+  white-space: nowrap;
+}
+
+.download-pill-group .pure-button b {
+  font-weight: 600;
 }
 
 .download-pill-group select {
   background: transparent !important;
   color: var(--text-primary) !important;
   border: none !important;
-  padding: 0 12px !important;
+  padding: 0 32px 0 12px !important;
+  /* Added right padding for the arrow */
   font-size: 13px !important;
   cursor: pointer;
-  appearance: none;
+  appearance: auto;
+  /* Reset to auto to ensure the dropdown works correctly across browsers */
   outline: none;
   border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
   height: 36px;
+  max-width: 180px;
+  /* Prevent it from pushing the button out */
+}
+
+/* Fix dropdown options for Dark Mode */
+.download-pill-group select option {
+  background-color: #212121 !important;
+  /* Specific dark color for compatibility */
+  color: #fff !important;
+}
+
+body.light-theme .download-pill-group select option {
+  background-color: #fff !important;
+  color: #000 !important;
 }
 
 body.light-theme .download-pill-group select {
   border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
+
+/* Restore/Additional Action Pills */
+.utility-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--pill-bg);
+  border-radius: 50%;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.utility-pill:hover {
+  background-color: var(--hover-bg);
+}
+
+.utility-pill i {
+  font-size: 18px;
+}
+
 
 /* 简介框 (Description Container) */
 .description-container {
@@ -1592,6 +1651,7 @@ p.video-data {
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
