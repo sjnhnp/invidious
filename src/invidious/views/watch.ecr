@@ -78,7 +78,7 @@ we're going to need to do it here in order to allow for translations.
     <div class="primary-column">
         
         <!-- Player Container -->
-        <div id="player-container">
+        <div id="player-container" style="aspect-ratio: <%= aspect_ratio.replace(":", "/") %>;">
              <%= rendered "components/player" %>
         </div>
 

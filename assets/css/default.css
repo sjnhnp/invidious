@@ -991,9 +991,10 @@ body {
 
 /* Global Container Control */
 #contents {
-  max-width: 100% !important;
+  max-width: 1400px !important;
+  /* Constrain width to prevent identifiers 1, 2, 4, 5 */
   margin: 0 auto !important;
-  padding: 0 48px !important;
+  padding: 0 24px !important;
 }
 
 /* 播放页网格布局 (Watch Page Grid) */
@@ -1013,22 +1014,19 @@ body {
 /* 播放器容器稳定化 (Player Visibility Fix) */
 #player-container {
   width: 100%;
-  /* Remove fixed aspect ratio to prevent black bars */
-  background: #000;
+  /* Removed fixed background and min-height to eliminate identifiers 3, 7, 8 */
+  background: transparent;
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow);
   margin-bottom: 20px;
   z-index: 10;
   position: relative;
-  min-height: 200px;
 }
 
 .video-js {
   width: 100% !important;
-  height: auto !important;
-  /* Allow video.js to determine height based on aspect ratio */
-  aspect-ratio: auto;
+  height: 100% !important;
+  /* Scale to fit the aspect-ratio locked container */
   border-radius: var(--border-radius-lg);
   background-color: #000 !important;
 }
@@ -1202,26 +1200,7 @@ body.light-theme .like-pill {
   background-color: var(--hover-bg);
 }
 
-.download-pill-group select {
-  background: transparent;
-  color: var(--text-primary);
-  border: none !important;
-  padding: 0 16px;
-  font-size: 14px;
-  cursor: pointer;
-  appearance: none;
-  outline: none;
-  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-.download-pill-group select:hover {
-  background: var(--hover-bg);
-}
-
-body.light-theme .download-pill-group select {
-  border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
-}
-
+/* 下载胶囊样式优化 (identifier 6) */
 .download-pill-group .pure-button {
   background-color: transparent !important;
   color: var(--text-primary) !important;
@@ -1231,6 +1210,27 @@ body.light-theme .download-pill-group select {
   font-weight: 600 !important;
   margin: 0 !important;
   border: none !important;
+  box-shadow: none !important;
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.download-pill-group select {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  border: none !important;
+  padding: 0 12px !important;
+  font-size: 13px !important;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  height: 36px;
+}
+
+body.light-theme .download-pill-group select {
+  border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
 /* 简介框 (Description Container) */
