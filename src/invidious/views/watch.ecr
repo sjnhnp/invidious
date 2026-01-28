@@ -99,8 +99,8 @@ we're going to need to do it here in order to allow for translations.
         <!-- Interaction Row (YouTube 2024 Style) -->
         <div class="interaction-row">
             
-            <!-- Left: Channel & Subscribe -->
-            <div class="channel-info-wrapper">
+            <!-- Left Group: Channel Info + Subscribe -->
+            <div class="channel-group">
                  <a href="/channel/<%= video.ucid %>" class="channel-owner-link">
                     <% if !video.author_thumbnail.empty? %>
                         <img src="/ggpht<%= URI.parse(video.author_thumbnail).request_target %>" class="channel-avatar" />
@@ -110,20 +110,23 @@ we're going to need to do it here in order to allow for translations.
                         <span class="sub-count"><%= video.sub_count_text %></span>
                     </div>
                 </a>
-                <div class="subscribe-container">
+                <div class="subscribe-btn-wrapper">
                     <%= rendered "components/subscribe_widget" %>
                 </div>
             </div>
 
-            <!-- Right: Actions (Likes, Download) -->
-            <div class="video-actions">
-                <div class="action-btn-group">
-                    <div class="pure-button action-pill like-button">
+            <!-- Right Group: Actions (Likes, Download, etc.) -->
+            <div class="action-group">
+                <div class="action-pill-group">
+                    <div class="action-pill like-pill">
                          <i class="icon ion-ios-thumbs-up"></i>
                          <span><%= number_with_separator(video.likes) %></span>
                     </div>
+                    <div class="action-pill dislike-pill">
+                         <i class="icon ion-ios-thumbs-down"></i>
+                    </div>
                 </div>
-                <div class="download-container">
+                <div class="download-pill-group">
                     <%= Invidious::Frontend::WatchPage.download_widget(locale, video, video_assets) %>
                 </div>
             </div>
