@@ -41,8 +41,15 @@
 </div>
 
 <div class="pure-g">
-<% trending.each do |item| %>
-    <%= rendered "components/item" %>
+<% if trending.empty? %>
+    <div class="pure-u-1 h-box" style="text-align:center; padding: 50px 0; color: var(--text-secondary);">
+        <i class="icon ion-ios-trending-up" style="font-size: 64px; opacity: 0.3;"></i>
+        <p><%= translate(locale, "No trending videos found.") %></p>
+    </div>
+<% else %>
+    <% trending.each do |item| %>
+        <%= rendered "components/item" %>
+    <% end %>
 <% end %>
 </div>
 

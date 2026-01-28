@@ -954,6 +954,7 @@ p,
 
 /* =========================================
    Modern UI Beautification Overrides
+   By Antigravity
    ========================================= */
 
 :root {
@@ -964,222 +965,282 @@ p,
   --accent-color: #3ea6ff;
   --hover-bg: #383838;
   --border-radius: 12px;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  --input-bg: #121212;
+  --input-border: #333;
 }
 
-/* Force dark theme-like appearance or refine dark theme */
-body.dark-theme {
+body.light-theme {
+  --bg-color: #ffffff;
+  --card-bg: #f9f9f9;
+  --text-primary: #0f0f0f;
+  --text-secondary: #606060;
+  --accent-color: #065fd4;
+  --hover-bg: #e5e5e5;
+  --border-radius: 12px;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --input-bg: #ffffff;
+  --input-border: #ccc;
+}
+
+/* Base Body Styles */
+body.dark-theme,
+body.light-theme {
   background-color: var(--bg-color);
   color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* Container Spacing */
 #contents {
-  max-width: 1700px;
-  padding: 0 20px;
+  max-width: 1750px;
+  padding: 0 24px;
 }
 
 /* Player Container */
 #player-container {
   border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow);
   margin-bottom: 20px;
-}
-
-/* Card Styling for Layout Blocks */
-/* We target the h-box inside columns to look like cards */
-.pure-u-lg-1-5 .h-box,
-.pure-u-lg-3-5 .h-box,
-.pure-u-md-4-5 .h-box,
-.pure-u-1 .h-box {
-  /* Only apply card style to sidebars and main content areas, excluding the player which we styled above */
-  /* Note: css selection here is tricky without custom classes, we try to be generic yet specific */
-  transition: background 0.2s;
-}
-
-/* Enhance specific areas */
-.pure-u-lg-3-5 .h-box {
-  /* Main Description/Comments Area */
-  padding: 20px 0;
 }
 
 /* Typography Improvements */
 h1 {
-  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  font-family: "Roboto", "Segoe UI", sans-serif;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 22px !important;
   color: var(--text-primary);
-  margin-bottom: 10px;
+  margin-bottom: 12px !important;
 }
 
 h3,
 h4,
 h5 {
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-p {
-  line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 a {
   color: var(--text-primary);
+  text-decoration: none;
   transition: color 0.2s;
 }
 
 a:hover {
-  color: var(--accent-color);
-  text-decoration: none;
+  color: var(--accent-color) !important;
 }
 
 /* Buttons Polish */
 .pure-button {
-  border-radius: 18px !important;
-  padding: 8px 16px !important;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+  border-radius: 20px !important;
+  padding: 8px 20px !important;
+  font-weight: 600 !important;
   border: none !important;
-  background-color: #333;
-  color: #fff;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s, transform 0.1s !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.pure-button:hover {
-  background-color: #4d4d4d;
+.pure-button:active {
+  transform: scale(0.96);
 }
 
 .pure-button-primary {
-  background-color: var(--accent-color) !important;
-  color: #000 !important;
-  font-weight: 600 !important;
+  background-color: var(--text-primary) !important;
+  color: var(--bg-color) !important;
 }
 
 .pure-button-primary:hover {
-  background-color: #65b8ff !important;
+  opacity: 0.9;
+}
+
+.pure-button-secondary {
+  background-color: var(--hover-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Specific Subscription Button */
+#subscribe {
+  background-color: var(--text-primary) !important;
+  color: var(--bg-color) !important;
+  border-radius: 20px !important;
+}
+
+body.light-theme #subscribe {
+  background-color: #0f0f0f !important;
+  color: #fff !important;
+}
+
+body.dark-theme #subscribe {
+  background-color: #fff !important;
+  color: #0f0f0f !important;
 }
 
 /* Search Bar Modernization */
 .searchbar input[type="search"] {
-  background-color: #121212 !important;
-  border: 1px solid #333 !important;
-  border-radius: 20px !important;
-  padding: 10px 20px !important;
-  color: #fff !important;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  background-color: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: 40px !important;
+  padding: 10px 24px !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+  font-size: 16px;
 }
 
 .searchbar input[type="search"]:focus {
   border-color: var(--accent-color) !important;
-  background-color: #000 !important;
+  outline: none;
 }
 
-/* Thumbnails & Related Videos */
+/* Feed Menu Tabs */
+.feed-menu {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--hover-bg);
+  padding-bottom: 8px;
+}
+
+.feed-menu-item {
+  padding: 6px 16px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  background: var(--hover-bg);
+  color: var(--text-primary) !important;
+}
+
+.feed-menu-item:hover {
+  background: var(--accent-color);
+  color: #fff !important;
+}
+
+/* Video Cards Aesthetics */
 .thumbnail img {
   border-radius: var(--border-radius);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
 
 .thumbnail:hover img {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
 .video-card-row p {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
+.video-data {
+  font-size: 13px !important;
+  color: var(--text-secondary) !important;
+  font-weight: 400 !important;
+}
+
+/* Watch Page Details */
+.description-container {
+  background-color: var(--card-bg) !important;
+  border: none !important;
+  padding: 16px !important;
+  border-radius: 12px !important;
+}
+
+#descriptionWrapper {
+  color: var(--text-primary) !important;
   font-size: 14px;
-  font-weight: 600;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin-bottom: 5px;
+  line-height: 1.5;
 }
 
-/* Sidebar Metadata (Left Column) */
-.pure-u-lg-1-5 .h-box p {
-  font-size: 13px;
-  padding: 5px 0;
-  border-bottom: 1px solid #333;
-}
-
-.pure-u-lg-1-5 .h-box p:last-child {
-  border-bottom: none;
-}
-
-/* Channel Profile */
-.channel-profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.channel-profile>img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.channel-name {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-/* Comments Section */
-.comment {
-  background-color: var(--card-bg);
-  padding: 15px;
-  border-radius: var(--border-radius);
-  margin-bottom: 15px;
-  border: 1px solid #333;
-}
-
-.comment-header {
-  margin-bottom: 8px;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--text-primary);
-}
-
-.comment-content {
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-
-/* Navbar */
-.navbar {
-  border-bottom: 1px solid #333;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.navbar .index-link {
-  font-size: 20px;
-  background: linear-gradient(45deg, #ff0000, #ff6b6b);
+/* Navbar index link (Wings) */
+.index-link {
+  font-family: "Outfit", sans-serif;
+  font-weight: 800 !important;
+  font-size: 24px !important;
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -1px;
 }
 
-/* Scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* Related Videos Sidebar */
+.related-video-item {
+  transition: background 0.2s, transform 0.2s;
+  padding: 8px;
+  border-radius: 12px;
 }
 
-::-webkit-scrollbar-track {
-  background: #0f0f0f;
+.related-video-item:hover {
+  background: var(--hover-bg);
+  transform: translateX(4px);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #444;
-  border-radius: 4px;
+.related-video-item h4 {
+  color: var(--text-primary) !important;
+  font-size: 14px !important;
+  margin-bottom: 4px !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+/* Icon Buttons Refinement */
+.icon-buttons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  color: var(--text-secondary) !important;
+}
+
+.icon-buttons a:hover {
+  background: var(--hover-bg);
+  color: var(--accent-color) !important;
+}
+
+.icon-buttons i {
+  font-size: 20px;
+}
+
+/* Channel Profile Hover */
+.channel-profile:hover span {
+  color: var(--accent-color) !important;
+}
+
+/* User Field Icons */
+.user-field a {
+  font-size: 18px;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.user-field a:hover {
+  color: var(--text-primary);
+}
+
+/* Interaction Row Button Spacing */
+.rounded-btn {
+  background: var(--hover-bg) !important;
+  color: var(--text-primary) !important;
+  font-size: 14px !important;
+}
+
+
+/* Download box refinement */
+#download_widget {
+  background: var(--hover-bg);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+#download_widget select {
+  border-radius: 8px;
+  padding: 4px 8px;
+  background: var(--bg-color);
+  color: var(--text-primary);
+  border: 1px solid var(--input-border);
 }
