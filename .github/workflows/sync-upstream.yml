@@ -1,0 +1,65 @@
+name: Upstream Sync
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # 每周一自动运行
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  sync_with_upstream:
+    name: Sync with Upstream
+    runs-on: ubuntu-latest
+    if: ${{ github.event.repository.fork }}
+
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Add Upstream
+        run: |
+          git remote add upstream https://github.com/iv-org/invidious.git
+          git fetch upstream
+
+      - name: Sync with upstream
+        id: sync
+        run: |
+          # 尝试合并上游 master
+          # -X ours 策略意味着如果遇到冲突，优先保留我们的修改（即您的自定义修改）
+          # 这通常能解决简单的配置文件冲突，但保留了上游的新功能
+          if git merge upstream/master -m "Merge upstream changes" --no-edit; then
+            echo "Merge successful"
+            echo "status=success" >> $GITHUB_OUTPUT
+            git push origin master
+          else
+            echo "Merge failed (conflict)"
+            echo "status=conflict" >> $GITHUB_OUTPUT
+            git merge --abort
+          fi
+
+      - name: Handle Conflicts (Create PR)
+        if: steps.sync.outputs.status == 'conflict'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Merge upstream changes (Conflict Resolution Needed)"
+          title: "⚠️ Upstream Sync Conflicts Found"
+          body: |
+            Could not auto-merge upstream changes due to conflicts. 
+            Please review and resolve conflicts manually in this Pull Request.
+            
+            无法自动合并上游更改，因为存在冲突。请在此 PR 中手动解决冲突以保留您的自定义设置。
+          branch: "upstream-sync-conflict"
+          base: master
+          delete-branch: true
