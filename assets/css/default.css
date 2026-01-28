@@ -1274,18 +1274,28 @@ body.light-theme .download-pill-group select {
   margin-bottom: 16px;
 }
 
+
 .related-video-item {
   display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 8px;
+  /* Tighter gap like YouTube */
+  margin-bottom: 8px;
+  /* Tighter vertical spacing */
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
+  /* Remove padding for cleaner look */
   border-radius: 8px;
-  transition: background 0.2s;
+  transition: transform 0.2s;
+  /* Only animate transform if needed, bg change might be distracting on list */
 }
 
 .related-video-item:hover {
-  background-color: var(--pill-bg);
+  background: transparent;
+  /* YouTube sidebar items don't usually have a bg hover effect, the title underlines or image dims */
+}
+
+.related-video-item:hover .thumbnail-wrapper img {
+  filter: brightness(0.9);
 }
 
 .thumbnail-wrapper {
@@ -1301,39 +1311,55 @@ body.light-theme .download-pill-group select {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 12px;
+  /* YouTube thumbs are quite rounded now */
 }
 
 .length-badge {
   position: absolute;
   bottom: 4px;
   right: 4px;
-  background: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Slightly more transparent */
   color: #fff;
-  padding: 2px 4px;
+  padding: 1px 4px;
   border-radius: 4px;
-  font-size: 11px;
-  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .video-info {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-right: 24px;
+  /* Space for the 'more' dots if we had them */
 }
 
 .rv-title {
+  font-family: "Roboto", sans-serif;
   font-size: 14px !important;
-  font-weight: 600 !important;
-  line-height: 1.4 !important;
+  font-weight: 500 !important;
+  /* YouTube uses 500 (Medium) not Bold */
+  line-height: 20px !important;
   margin-bottom: 4px !important;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   color: var(--text-primary);
+  max-height: 40px;
+  /* 2 lines * 20px */
 }
 
 .rv-metadata {
+  font-family: "Roboto", sans-serif;
   font-size: 12px;
+  line-height: 18px;
   color: var(--text-secondary);
 }
 
