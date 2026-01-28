@@ -1005,7 +1005,14 @@ body {
   max-width: 100% !important;
   margin: 0 auto !important;
   padding: 0 4vw !important;
-  /* Responsive gutter */
+  /* Responsive side spacing */
+}
+
+@media (min-width: 1600px) {
+  #contents {
+    padding: 0 80px !important;
+    /* Cap padding on very large screens */
+  }
 }
 
 @media (max-width: 1024px) {
@@ -1020,26 +1027,26 @@ body {
     overflow-x: hidden;
   }
 
-  /* Precision padding for non-player content on mobile to avoid overflow */
+  /* Precision alignment for mobile content - avoid using width: 100% !important here */
   #contents>.navbar,
-  .primary-column>*:not(#player-container),
+  .primary-column>.interaction-row,
+  .primary-column>.video-title,
+  .description-container,
+  .comments-area,
   .secondary-column {
     padding-left: 16px !important;
     padding-right: 16px !important;
-    width: 100% !important;
-    max-width: 100vw !important;
   }
 }
 
 /* 播放页网格布局 (Watch Page Grid) */
 .watch-main-layout {
   display: grid;
-  grid-template-columns: 1fr 402px;
-  /* Keep sidebar at specific width to match YouTube */
+  grid-template-columns: minmax(0, 1fr) 402px;
+  /* Fix sidebar width */
   gap: 40px;
-  /* Restore comfortable spacing as requested */
   padding-top: 24px;
-  /* Restore vertical breathing room */
+  align-items: start;
 }
 
 @media (max-width: 1024px) {
@@ -1091,16 +1098,16 @@ body {
   left: 0;
 }
 
-/* Ensure the poster and video fill the container WITHOUT cropping (Requested Item 3) */
+/* Ensure the poster and video fill the container to show rounded corners (Requested Item 1/2) */
+/* Since we match the container's aspect-ratio exactly now, 'cover' is safe and perfectly fits rounded corners. */
 video.vjs-tech {
-  object-fit: contain !important;
-  /* Back to contain to ensure full image version as requested */
+  object-fit: cover !important;
   border-radius: var(--border-radius-lg);
 }
 
 .vjs-poster {
-  background-size: contain !important;
-  background-color: #000 !important;
+  background-size: cover !important;
+  background-color: transparent !important;
 }
 
 .vjs-big-play-button {
