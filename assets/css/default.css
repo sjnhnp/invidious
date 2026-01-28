@@ -1101,7 +1101,7 @@ body {
 /* Ensure the poster and video fill the container to show rounded corners (Requested Item 1/2) */
 /* Since we match the container's aspect-ratio exactly now, 'cover' is safe and perfectly fits rounded corners. */
 video.vjs-tech {
-  object-fit: cover !important;
+  object-fit: contain !important;
   border-radius: var(--border-radius-lg);
 }
 
