@@ -989,20 +989,41 @@ body {
   font-family: "Roboto", "Arial", sans-serif;
 }
 
-/* Global Container Control */
+/* Global Container Control (YouTube 2025 High Fidelity) */
 #contents {
   max-width: 100% !important;
-  /* Allow full screen width as requested (Identifier 4) */
   margin: 0 auto !important;
-  padding: 0 48px !important;
-  /* Comfortable side breathing room */
+  padding: 0 4vw !important;
+  /* Responsive gutter */
+}
+
+@media (max-width: 1024px) {
+  #contents {
+    padding: 0 24px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #contents {
+    padding: 0 !important;
+    /* Edge-to-edge for mobile player experience */
+  }
+
+  /* Restore padding for non-player content on mobile */
+  #contents>*:not(.watch-main-layout),
+  .watch-main-layout>*:not(.primary-column),
+  .primary-column>*:not(#player-container) {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
 }
 
 /* 播放页网格布局 (Watch Page Grid) */
 .watch-main-layout {
   display: grid;
   grid-template-columns: 1fr 400px;
-  gap: 24px;
+  gap: 40px;
+  /* Slightly increased gap as requested (Requested Item 5) */
   padding-top: 24px;
 }
 
@@ -1015,14 +1036,23 @@ body {
 /* 播放器容器稳定化 (Player Visibility Fix) */
 #player-container {
   width: 100%;
-  /* Removed fixed background and min-height to eliminate identifiers 3, 7, 8 */
-  background: transparent;
+  background: #000;
+  /* Re-add background for consistent gap filling */
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   margin-bottom: 20px;
   z-index: 10;
   position: relative;
 }
+
+@media (max-width: 640px) {
+  #player-container {
+    border-radius: 0 !important;
+    /* Edge-to-edge on mobile like YouTube */
+    margin-bottom: 12px;
+  }
+}
+
 
 .video-js {
   width: 100% !important;
@@ -1043,17 +1073,17 @@ body {
   left: 0;
 }
 
-/* Ensure the poster and video are NOT zoomed/cropped */
+/* Ensure the poster and video fill the container to show rounded corners (Requested Item 1/2) */
 video.vjs-tech {
-  object-fit: contain !important;
-  /* This is the key: it fits the whole image without zooming */
+  object-fit: cover !important;
+  /* Force fill to eliminate internal black bars */
   border-radius: var(--border-radius-lg);
 }
 
 .vjs-poster {
-  background-size: contain !important;
-  /* Ensure poster fits within the player area */
-  background-color: #000 !important;
+  background-size: cover !important;
+  /* Match video fit */
+  background-color: transparent !important;
 }
 
 .vjs-big-play-button {
@@ -1455,14 +1485,34 @@ body.light-theme .download-pill-group select {
   color: var(--text-primary);
 }
 
-/* 导航栏 (Navbar) */
+/* 导航栏 (Navbar) Alignment Fix */
 .navbar {
-  padding: 12px 0;
+  padding: 12px 0 !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-body.light-theme .navbar {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+/* Remove internal h-box padding in navbar to align with layout (Requested Item 3) */
+.navbar.h-box {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.user-field {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+}
+
+.user-field>div {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
 }
 
 .index-link {
@@ -1474,6 +1524,8 @@ body.light-theme .navbar {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-decoration: none;
+  padding-left: 0 !important;
+  /* Ensure alignment with player */
 }
 
 /* 搜索栏 (Search Bar Fix) */
