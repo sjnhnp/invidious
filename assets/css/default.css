@@ -991,10 +991,11 @@ body {
 
 /* Global Container Control */
 #contents {
-  max-width: 1400px !important;
-  /* Constrain width to prevent identifiers 1, 2, 4, 5 */
+  max-width: 100% !important;
+  /* Allow full screen width as requested (Identifier 4) */
   margin: 0 auto !important;
-  padding: 0 24px !important;
+  padding: 0 48px !important;
+  /* Comfortable side breathing room */
 }
 
 /* 播放页网格布局 (Watch Page Grid) */
@@ -1026,9 +1027,20 @@ body {
 .video-js {
   width: 100% !important;
   height: 100% !important;
-  /* Scale to fit the aspect-ratio locked container */
+  /* Ensure the player fills the aspect-ratio container perfectly (Identifiers 2, 3) */
   border-radius: var(--border-radius-lg);
-  background-color: #000 !important;
+  background-color: transparent !important;
+  /* Remove background when not playing */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Enforce absolute positioning inside aspect-ratio containers for pixel-perfect fit */
+#player-container>.video-js {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* Ensure the poster and video are NOT zoomed/cropped */
