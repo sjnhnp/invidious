@@ -593,6 +593,14 @@ span>select {
   color: rgba(49, 49, 51, 1);
 }
 
+/* Fix for vertical alignment/clipping of CJK text in select boxes */
+.pure-form select {
+  height: auto !important;
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+  line-height: 1.5 !important;
+}
+
 .pure-control-group label {
   word-wrap: normal;
 }
