@@ -132,9 +132,11 @@ we're going to need to do it here in order to allow for translations.
                     <i class="icon ion-logo-youtube"></i>
                 </a>
 
+                <!--
                 <a class="utility-pill" title="<%=translate(locale, "Switch Invidious Instance")%>" href="https://redirect.invidious.io/watch?v=<%= video.id %>">
                     <i class="icon ion-md-jet"></i>
                 </a>
+                -->
 
                 <div class="download-pill-group">
                     <%= Invidious::Frontend::WatchPage.download_widget(locale, video, video_assets) %>
