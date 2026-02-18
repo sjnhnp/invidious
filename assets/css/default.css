@@ -87,6 +87,16 @@ body {
   height: auto;
 }
 
+.channel-profile > .channel-name-pronouns {
+    display: inline-block;
+}
+
+.channel-profile > .channel-name-pronouns > .channel-pronouns {
+  font-style: italic;
+  font-size: .8em;
+  font-weight: lighter;
+}
+
 body a.channel-owner {
   background-color: #008bec;
   color: #fff;
@@ -484,7 +494,8 @@ p.video-data {
   font-size: 80%;
 }
 
-.channel-profile>.channel-name {
+.channel-profile > .channel-name,
+.channel-profile > .channel-name-pronouns > .channel-name {
   overflow-wrap: anywhere;
 }
 
